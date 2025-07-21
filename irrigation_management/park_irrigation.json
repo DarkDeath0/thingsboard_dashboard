@@ -1,0 +1,445 @@
+{
+  "ruleChain": {
+    "name": "Park Irrigation",
+    "type": "CORE",
+    "firstRuleNodeId": null,
+    "root": false,
+    "debugMode": false,
+    "configuration": null,
+    "additionalInfo": {
+      "description": ""
+    }
+  },
+  "metadata": {
+    "version": 94,
+    "firstNodeIndex": 6,
+    "nodes": [
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbChangeOriginatorNode",
+        "name": "to Park Field1",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "originatorSource": "RELATED",
+          "entityType": null,
+          "entityNamePattern": null,
+          "relationsQuery": {
+            "fetchLastLevelOnly": false,
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "Field1_Data",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          }
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1018,
+          "layoutY": 125
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.action.TbCreateRelationNode",
+        "name": "Assigned to Asset",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "direction": "TO",
+          "entityType": "ASSET",
+          "entityNamePattern": "MK_Field1",
+          "entityTypePattern": "Park Irrigation",
+          "relationType": "Park_Data",
+          "createEntityIfNotExists": false,
+          "removeCurrentRelations": false,
+          "changeOriginatorToRelatedEntity": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 50,
+          "layoutY": 389
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbChangeOriginatorNode",
+        "name": "to Park Field2",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "originatorSource": "RELATED",
+          "entityType": null,
+          "entityNamePattern": null,
+          "relationsQuery": {
+            "fetchLastLevelOnly": false,
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "Field2_Data",
+                "entityTypes": [
+                  "ASSET"
+                ]
+              }
+            ]
+          }
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1018,
+          "layoutY": 200
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbCheckRelationNode",
+        "name": "Check Relation Field1",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "checkForSingleEntity": true,
+          "direction": "TO",
+          "entityType": "ASSET",
+          "entityId": "8acd2b80-1d01-11f0-8c3b-cfa4b617470f",
+          "relationType": "Field1_Data"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 745,
+          "layoutY": 128
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbCheckRelationNode",
+        "name": "Check Relation Field2",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "checkForSingleEntity": true,
+          "direction": "TO",
+          "entityType": "ASSET",
+          "entityId": "49150f70-1d0e-11f0-8c3b-cfa4b617470f",
+          "relationType": "Field2_Data"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 745,
+          "layoutY": 203
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgAttributesNode",
+        "name": "Save Client attributes",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 2,
+        "configuration": {
+          "scope": "CLIENT_SCOPE",
+          "notifyDevice": false,
+          "sendAttributesUpdatedNotification": false,
+          "updateAttributesOnlyOnValueChange": true
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 50,
+          "layoutY": 458
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.profile.TbDeviceProfileNode",
+        "name": "Device Profile Node",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "persistAlarmRulesState": false,
+          "fetchAlarmRulesStateOnStart": false
+        },
+        "additionalInfo": {
+          "description": "Process incoming messages from devices with the alarm rules defined in the device profile. Dispatch all incoming messages with \"Success\" relation type.",
+          "layoutX": 191,
+          "layoutY": 229
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.filter.TbMsgTypeSwitchNode",
+        "name": "Message Type Switch",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "version": 0
+        },
+        "additionalInfo": {
+          "description": null,
+          "layoutX": 402,
+          "layoutY": 127
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.telemetry.TbMsgTimeseriesNode",
+        "name": "Save Time series",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "defaultTTL": 0,
+          "skipLatestPersistence": false,
+          "useServerTs": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1601,
+          "layoutY": 121
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Field1-Change and remove keys",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return {msg: msg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "//remove some UC300 payload parameteres\nif (msg.gpio_out_1 != null){\n    msg.valve_status = msg.gpio_out_1;\n    msg.remove(\"gpio_out_1\");\n}\nif (msg.gpio_out_2 != null){msg.remove(\"gpio_out_2\");}\nif (msg.modbus_chn_1_alarm != null){msg.remove(\"modbus_chn_1_alarm\");}\nif (msg.modbus_chn_2_alarm != null){msg.remove(\"modbus_chn_2_alarm\");}\nif (msg.modbus_chn_3_alarm != null){msg.remove(\"modbus_chn_3_alarm\");}\n\nif(msg.modbus_chn_1 != null && msg.modbus_chn_2 != null){\n    msg.moisture1 = (parseInt(msg.modbus_chn_1) + parseInt(msg.modbus_chn_2)) / 2;\n    msg.moisture1 = msg.moisture1 /100;\n    msg.remove(\"modbus_chn_1\");\n    msg.remove(\"modbus_chn_2\");\n}else if (msg.modbus_chn_1 != null && metadata.modbus_chn_2 != null){\n    msg.moisture1 = (parseInt(msg.modbus_chn_1) + parseInt(metadata.modbus_chn_2)) / 2;\n    msg.moisture1 = msg.moisture1 /100;\n    msg.remove(\"modbus_chn_1\");\n}else if (msg.modbus_chn_2 != null && metadata.modbus_chn_1 != null){\n    msg.moisture1 = (parseInt(msg.modbus_chn_2) + parseInt(metadata.modbus_chn_1)) / 2;\n    msg.moisture1 = msg.moisture1 /100;\n    msg.remove(\"modbus_chn_2\");\n}\n\nif (msg.modbus_chn_3 != null){\n    //msg.soil_temperature = msg.modbus_chn_3;\n    msg.remove(\"modbus_chn_3\");\n}\n////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\n//EM500SMTC1_Park\nif (msg.moisture != null && metadata.deviceName == \"EM500SMTC1_Park\"){\n    //msg.moisture2 = msg.moisture;\n    //msg.remove(\"moisture\");\n}\nif (msg.temperature != null && metadata.deviceName == \"EM500SMTC1_Park\"){\n    msg.soil_temperature = msg.temperature;\n    msg.remove(\"temperature\");\n}\nif (msg.ec != null && metadata.deviceName == \"EM500SMTC1_Park\"){\n    msg.soil_conductivity = msg.ec;\n    msg.remove(\"ec\");\n}\n//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////\nif (msg.adc_1 != null){     //before valve presure water(bar) p=(Pmax-Pmin)/(Imax-Imin)*(I-Imin)+Pmin\n    //msg.water_presure = parseFloat(msg.adc_1);\n    var presure = parseDouble(msg.adc_1);\n    presure = (10 - 0) / (20 - 4) * (presure - 4) + 0;\n    if(presure < 0){presure = 0}\n    msg.water_presure = presure;\n    msg.remove(\"adc_1\");\n}\nif (msg.adc_2 != null){     //before valve presure water(bar) p=(Pmax-Pmin)/(Imax-Imin)*(I-Imin)+Pmin\n    //msg.water_presure = parseFloat(msg.adc_1);\n    var presure = parseDouble(msg.adc_2);\n    presure = (10 - 0) / (20 - 4) * (presure - 4) + 0;\n    if(presure < 0){presure = 0}\n    msg.water_presure = presure;\n    msg.remove(\"adc_2\");\n}\nif (msg.adv_1 != null){     //valve current usage\n    //ACS712ELCTR-05B-T Sensitivity (mV/A) --> 185 \n    msg.valve_current = (2.59 - parseDouble(msg.adv_1)) / 0.185;\n    if(msg.valve_current < 0){msg.valve_current = 0;}\n    msg.remove(\"adv_1\");\n}\nif (msg.adv_2 != null){msg.remove(\"adv_2\");}\nif (msg.gpio_in_2 != null){     //door of box\n    msg.door_status = msg.gpio_in_2;\n    msg.remove(\"gpio_in_2\");\n    if(msg.door_status == \"on\" || msg.door_status == \"1\"){\n        msg.door_status = \"off\";\n    }else{\n        msg.door_status = \"on\";\n    }\n}\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1309,
+          "layoutY": 125
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetAttributesNode",
+        "name": "Fetch last moistures",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "tellFailureIfAbsent": false,
+          "fetchTo": "METADATA",
+          "clientAttributeNames": [],
+          "sharedAttributeNames": [],
+          "serverAttributeNames": [],
+          "latestTsKeyNames": [
+            "modbus_chn_1",
+            "modbus_chn_2"
+          ],
+          "getLatestValueWithTs": false
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 497,
+          "layoutY": 30
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Field2-Change and remove keys",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return {msg: msg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "//remove some UC300 payload parameteres\nif (msg.gpio_out_1 != null){msg.remove(\"gpio_out_1\");}\nif (msg.gpio_out_2 != null){\n    msg.valve_status = msg.gpio_out_2;\n    msg.remove(\"gpio_out_2\");\n}\n\nif (msg.modbus_chn_1_alarm != null){msg.remove(\"modbus_chn_1_alarm\");}\nif (msg.modbus_chn_2_alarm != null){msg.remove(\"modbus_chn_2_alarm\");}\nif (msg.modbus_chn_3_alarm != null){msg.remove(\"modbus_chn_3_alarm\");}\n\nif(msg.modbus_chn_1 != null && msg.modbus_chn_2 != null){\n    //msg.moisture = (parseInt(msg.modbus_chn_1) + parseInt(msg.modbus_chn_2)) / 2;\n    //msg.moisture = msg.moisture /100;\n    msg.remove(\"modbus_chn_1\");\n    msg.remove(\"modbus_chn_2\");\n}else if (msg.modbus_chn_1 != null && metadata.modbus_chn_2 != null){\n    //msg.moisture = (parseInt(msg.modbus_chn_1) + parseInt(metadata.modbus_chn_2)) / 2;\n    //msg.moisture = msg.moisture /100;\n    msg.remove(\"modbus_chn_1\");\n}else if (msg.modbus_chn_2 != null && metadata.modbus_chn_1 != null){\n    //msg.moisture = (parseInt(msg.modbus_chn_2) + parseInt(metadata.modbus_chn_1)) / 2;\n    //msg.moisture = msg.moisture /100;\n    msg.remove(\"modbus_chn_2\");\n}\n\nif (msg.modbus_chn_3 != null){\n    //msg.soil_temperature = msg.modbus_chn_3;\n    msg.remove(\"modbus_chn_3\");\n}\n\nif (msg.adc_1 != null){     //before valve presure water(bar) p=(Pmax-Pmin)/(Imax-Imin)*(I-Imin)+Pmin\n    //msg.water_presure = parseFloat(msg.adc_1);\n    var presure = parseDouble(msg.adc_1);\n    presure = (10 - 0) / (20 - 4) * (presure - 4) + 0;\n    if(presure < 0){presure = 0}\n    msg.water_presure = presure;\n    msg.remove(\"adc_1\");\n}\nif (msg.adc_2 != null){     //before valve presure water(bar) p=(Pmax-Pmin)/(Imax-Imin)*(I-Imin)+Pmin\n    //msg.water_presure = parseFloat(msg.adc_1);\n    var presure = parseDouble(msg.adc_2);\n    presure = (10 - 0) / (20 - 4) * (presure - 4) + 0;\n    if(presure < 0){presure = 0}\n    msg.water_presure = presure;\n    msg.remove(\"adc_2\");\n}\nif (msg.adv_1 != null){msg.remove(\"adv_1\");}\nif (msg.adv_2 != null){     //valve current usage\n    //ACS712ELCTR-05B-T Sensitivity (mV/A) --> 185\n    msg.valve_current = (2.59 - parseDouble(msg.adv_2)) / 0.185;\n    if(msg.valve_current < 0){msg.valve_current = 0;}\n    msg.remove(\"adv_2\");\n}\n\nif (msg.gpio_in_2 != null){     //door of box\n    msg.door_status = msg.gpio_in_2;\n    msg.remove(\"gpio_in_2\");\n    if(msg.door_status == \"on\" || msg.door_status == \"1\"){\n        msg.door_status = \"off\";\n    }else{\n        msg.door_status = \"on\";\n    }\n}\n/////////////////////////////////////////////////////////////////////////////////////////////////////\n//Dragino SE01-LB\nif (msg.temp_SOIL != null){\n    msg.soil_temperature = msg.temp_SOIL;\n    msg.remove(\"temp_SOIL\");\n}\nif (msg.water_SOIL != null){\n    msg.moisture = msg.water_SOIL;\n    msg.remove(\"water_SOIL\");\n}\nif (msg.conduct_SOIL != null){\n    msg.soil_conductivity = msg.conduct_SOIL;\n    msg.remove(\"conduct_SOIL\");\n}\n///////////////////////////////////////////////////////////////////////////////////////////////////\n\nreturn {msg: msg, metadata: metadata, msgType: msgType};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 1311,
+          "layoutY": 200
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbTransformMsgNode",
+        "name": "Set UC300 RPC commands",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "scriptLang": "TBEL",
+          "jsScript": "return {msg: msg, metadata: metadata, msgType: msgType};",
+          "tbelScript": "var newmsg = {};\n//if create new asset, change originatorId on code\nif(msg.valve_status != null && msg.originatorName != null && msg.originatorId != null){\n    //set uc300 gpio 1 command\n    if(msg.originatorName == \"MK_Field1\" && msg.originatorId == \"8acd2b80-1d01-11f0-8c3b-cfa4b617470f\"){\n        if(msg.valve_status == \"off\"){\n            newmsg.method = \"setGPIO1\";\n            newmsg.params = \"\\\"BwD/\\\"\";\n            newmsg.additionalInfo = null;\n        } else if(msg.valve_status == \"on\"){\n            newmsg.method = \"setGPIO1\";\n            newmsg.params = \"\\\"BwH/\\\"\";\n            newmsg.additionalInfo = null;\n        }\n    }\n    //set uc300 gpio 2 command\n    if(msg.originatorName == \"MK_Field2\" && msg.originatorId == \"49150f70-1d0e-11f0-8c3b-cfa4b617470f\"){\n        if(msg.valve_status == \"off\"){\n            newmsg.method = \"setGPIO2\";\n            newmsg.params = \"\\\"CAD/\\\"\";\n            newmsg.additionalInfo = null;\n        } else if(msg.valve_status == \"on\"){\n            newmsg.method = \"setGPIO2\";\n            newmsg.params = \"\\\"CAH/\\\"\";\n            newmsg.additionalInfo = null;\n        }\n    }\n}\nmsgType= \"RPC_CALL_FROM_SERVER_TO_DEVICE\";\nreturn {msg: newmsg, metadata: metadata, msgType: msgType};"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 470,
+          "layoutY": 497
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.metadata.TbGetOriginatorFieldsNode",
+        "name": "Fetch entity id",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 1,
+        "configuration": {
+          "dataMapping": {
+            "name": "originatorName",
+            "type": "originatorType",
+            "id": "originatorId"
+          },
+          "ignoreNullStrings": false,
+          "fetchTo": "DATA"
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 452,
+          "layoutY": 326
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.transform.TbChangeOriginatorNode",
+        "name": "Asset to UC300",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "originatorSource": "RELATED",
+          "entityType": null,
+          "entityNamePattern": null,
+          "relationsQuery": {
+            "fetchLastLevelOnly": false,
+            "direction": "TO",
+            "maxLevel": 1,
+            "filters": [
+              {
+                "relationType": "UC300_Commands",
+                "entityTypes": [
+                  "DEVICE"
+                ]
+              }
+            ]
+          }
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 472,
+          "layoutY": 415
+        }
+      },
+      {
+        "type": "org.thingsboard.rule.engine.rpc.TbSendRPCRequestNode",
+        "name": "RPC Call Request",
+        "debugMode": false,
+        "singletonMode": false,
+        "queueName": null,
+        "configurationVersion": 0,
+        "configuration": {
+          "timeoutInSeconds": 60
+        },
+        "additionalInfo": {
+          "description": "",
+          "layoutX": 472,
+          "layoutY": 573
+        }
+      }
+    ],
+    "connections": [
+      {
+        "fromIndex": 0,
+        "toIndex": 9,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 2,
+        "toIndex": 11,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 3,
+        "toIndex": 0,
+        "type": "True"
+      },
+      {
+        "fromIndex": 4,
+        "toIndex": 2,
+        "type": "True"
+      },
+      {
+        "fromIndex": 6,
+        "toIndex": 7,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 10,
+        "type": "Post telemetry"
+      },
+      {
+        "fromIndex": 7,
+        "toIndex": 13,
+        "type": "Attributes Updated"
+      },
+      {
+        "fromIndex": 9,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 3,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 3,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 4,
+        "type": "Failure"
+      },
+      {
+        "fromIndex": 10,
+        "toIndex": 4,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 11,
+        "toIndex": 8,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 12,
+        "toIndex": 15,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 13,
+        "toIndex": 14,
+        "type": "Success"
+      },
+      {
+        "fromIndex": 14,
+        "toIndex": 12,
+        "type": "Success"
+      }
+    ],
+    "ruleChainConnections": null
+  }
+}
